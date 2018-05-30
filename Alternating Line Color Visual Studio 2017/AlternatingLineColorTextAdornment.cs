@@ -1,28 +1,16 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="TextAdornment1.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
-using Microsoft.VisualStudio.Settings;
-using Microsoft.VisualStudio.Shell.Settings;
-using Microsoft.VisualStudio.Shell;
-using EnvDTE;
-using System.ComponentModel.Composition;
-using System.Globalization;
 using System.Windows.Media;
 
-namespace AlternatingLineColorVisualStudioExtension
+namespace AlternatingLineColorExtension
 {
     /// <summary>
-    /// TextAdornment1 places red boxes behind all the "a"s in the editor window
+    /// AlternatingLineColorTextAdornment places red boxes behind all the "a"s in the editor window
     /// </summary>
     internal sealed class AlternatingLineColorTextAdornment
     {
@@ -51,13 +39,13 @@ namespace AlternatingLineColorVisualStudioExtension
         /// <summary>
         /// Initializes a new instance of the <see cref="AlternatingLineColorTextAdornment"/> class.
         /// </summary>
-        /// <param name="textView">Text view to create the adornment for</param>
+        /// <param name="view">Text view to create the adornment for</param>
         public AlternatingLineColorTextAdornment(IWpfTextView textView)
         {
             if (textView == null)
                 throw new ArgumentNullException("textView");
 
-            _brush = new SolidColorBrush(Color.FromArgb(160, 194, 252, 233));
+            _brush = new SolidColorBrush(Color.FromArgb(180, 194, 252, 233));
             _brush.Freeze();
             _layer = textView.GetAdornmentLayer(_layerName);
 
@@ -86,7 +74,16 @@ namespace AlternatingLineColorVisualStudioExtension
             }
         }
 
-        private void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
+        /// <summary>
+        /// Handles whenever the text displayed in the view changes by adding the adornment to any reformatted lines
+        /// </summary>
+        /// <remarks><para>This event is raised whenever the rendered text displayed in the <see cref="ITextView"/> changes.</para>
+        /// <para>It is raised whenever the view does a layout (which happens when DisplayTextLineContainingBufferPosition is called or in response to text or classification changes).</para>
+        /// <para>It is also raised whenever the view scrolls horizontally or when its size changes.</para>
+        /// </remarks>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        internal void OnLayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
         {
             IWpfTextView textView = (IWpfTextView)sender;
             if (e.OldSnapshot != e.NewSnapshot && e.OldSnapshot.Version.Changes.IncludesLineChanges)
