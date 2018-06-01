@@ -50,6 +50,7 @@
     <Compile Include="AlternatingLineColorTextAdornment.cs" />
     <Compile Include="AlternatingLineColorTextAdornmentTextViewCreationListener.cs" />
     <Compile Include="AlternatingLineColorTextViewCreationListener.cs" />
+    <Compile Include="ColorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

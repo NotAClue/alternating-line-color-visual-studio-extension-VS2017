@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Alternating_Line_Color_Visual_Studio_2017.5fab5993-d0e4-43c8-909f-18cdfd7e7038" Version="1.0" Language="en-US" Publisher="Stephen J Naughton" />
-        <DisplayName>Alternating_Line_Color_Visual_Studio_2017</DisplayName>
-        <Description xml:space="preserve">Based on the Channel 9 10/4 show example for Visual Studio 2010 to add alternating line colors to the editor page background.</Description>
+        <Identity Id="alternating_line_color_visual_studio_extension.sjnaughton" Version="15.4" Language="en-US" Publisher="Stephen J Naughton" />
+        <DisplayName>Alternating Line Color Visual Studio 2017</DisplayName>
+        <Description xml:space="preserve">Based on the Channel 9 10/4 show example for Visual Studio 2010 to add alternating line colors to the editor page background.
+Note: now supports themes (you will need to restart VS after changing then theme)</Description>
         <License>Licence.txt</License>
         <Icon>AlternatingLineColorTextAdornment.ico</Icon>
         <PreviewImage>AlternatingLineColorTextAdornment_large.png</PreviewImage>
