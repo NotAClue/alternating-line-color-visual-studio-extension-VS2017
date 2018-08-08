@@ -8,6 +8,19 @@ namespace System.Windows.Media
 {
     internal static class ColorExtensions
     {
+
+        public static byte GetOpacity(this Brush brush)
+        {
+            byte opacity = 180;
+            var colorBrush = (SolidColorBrush)brush;
+            var brightness = colorBrush.Color.GetBrightness();
+            if (brightness < 0.15)
+                opacity = 10;
+            else
+                opacity = 180;
+            return opacity;
+        }
+
         public static float GetBrightness(this Color color)
         {
             float num = ((float)color.R) / 255f;

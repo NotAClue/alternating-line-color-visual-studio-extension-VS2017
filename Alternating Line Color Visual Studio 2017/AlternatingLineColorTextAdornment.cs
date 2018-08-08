@@ -24,10 +24,10 @@ namespace AlternatingLineColorExtension
         ///// </summary>
         //private readonly IWpfTextView _view;
 
-        ///// <summary>
-        ///// Adornment brush.
-        ///// </summary>
-        //private readonly Brush _brush;
+        /// <summary>
+        /// Adornment brush.
+        /// </summary>
+        private readonly Brush _brush;
 
         ///// <summary>
         ///// Adornment pen.
@@ -45,6 +45,9 @@ namespace AlternatingLineColorExtension
             if (textView == null)
                 throw new ArgumentNullException("textView");
 
+            var opacily = textView.Background.GetOpacity();
+            _brush = new SolidColorBrush(Color.FromArgb(opacily, 194, 252, 233));
+            _brush.Freeze();
             _layer = textView.GetAdornmentLayer(_layerName);
 
             textView.LayoutChanged += OnLayoutChanged;
@@ -105,13 +108,11 @@ namespace AlternatingLineColorExtension
                 int lineNumber = textView.TextSnapshot.GetLineNumberFromPosition(line.Extent.Start);
                 if (lineNumber % 2 == 1)
                 {
-                    var brush = GetBrush(textView);
                     var rect = new Rectangle()
                     {
-                        line.
                         Height = line.Height,
                         Width = textView.ViewportWidth,
-                        Fill = brush
+                        Fill = _brush
                     };
 
                     Canvas.SetLeft(rect, textView.ViewportLeft);
@@ -121,24 +122,12 @@ namespace AlternatingLineColorExtension
             }
         }
 
-        private Brush GetBrush(IWpfTextView textView)
-        {
-            byte opacity = GetOpacity(textView.TextViewLines);
-            var brush = new SolidColorBrush(Color.FromArgb(opacity, 194, 252, 233));
-            brush.Freeze();
-            return brush;
-        }
-
-        private static byte GetOpacity(Brush brush)
-        {
-            byte opacity = 255;
-            var colorBrush = (SolidColorBrush)brush;
-            var brightness = colorBrush.Color.GetBrightness();
-            if (brightness < 0.15)
-                opacity = 10;
-            else
-                opacity = 250;
-            return opacity;
-        }
+        //private Brush GetBrush(IWpfTextView textView)
+        //{
+        //    byte opacity = GetOpacity(textView.Background);
+        //    var brush = new SolidColorBrush(Color.FromArgb(opacity, 194, 252, 233));
+        //    brush.Freeze();
+        //    return brush;
+        //}
     }
 }
